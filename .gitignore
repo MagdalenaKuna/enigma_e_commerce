@@ -13,3 +13,6 @@ __pycache__/
 
 # Pycharm staff
 .idea/
+
+# db
+db.sqlite3
