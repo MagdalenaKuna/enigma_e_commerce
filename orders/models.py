@@ -14,8 +14,8 @@ class Address(models.Model):
 
 
 class Order(models.Model):
-    # client_fk = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    delivery_address = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    client_fk = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
     products_list_and_numbers = models.ManyToManyField(Product)
     order_date = models.DateField(auto_now_add=True)
     payment_date = models.DateField()
