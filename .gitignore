@@ -16,3 +16,6 @@ __pycache__/
 
 # db
 db.sqlite3
+
+# pictures
+*.jpg
