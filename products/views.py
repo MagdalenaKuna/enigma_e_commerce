@@ -3,7 +3,8 @@ from .models import Product
 from .serializers import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from accounts.permissions import SalesmanPermission
+from accounts.permissions import SalesmanPermission, ClientPermission
+from rest_framework.permissions import AllowAny
 from rest_framework import permissions
 
 
@@ -13,11 +14,13 @@ class ProductList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['name', 'description', 'price', 'category_fk']
     ordering_fields = ['name', 'category_fk', 'price']
+    permission_classes = [AllowAny]
 
 
 class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
 
 
 class ProductCreate(generics.CreateAPIView):

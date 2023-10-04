@@ -4,18 +4,19 @@ from .models import UserInfo
 
 def get_role(user):
     try:
-        return UserInfo.objects.get(name='role').user_set.filter(id=user.id).exists()
+        userinfo = UserInfo.objects.get(user=user.id)
+        return userinfo.role
     except ValueError:
         return None
 
 
 class SalesmanPermission(permissions.BasePermission):
-    def has_salesman_permission(self, request):
+    def has_permission(self, request, view):
         role = get_role(request.user)
         return role == UserInfo.SALESMAN
 
 
 class ClientPermission(permissions.BasePermission):
-    def has_client_permission(self, request):
+    def has_permission(self, request, view):
         role = get_role(request.user)
         return role == UserInfo.CLIENT

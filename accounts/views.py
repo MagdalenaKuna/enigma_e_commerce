@@ -12,5 +12,3 @@ class UserInfoCreate(generics.CreateAPIView):
 class UserInfoUpdate(generics.UpdateAPIView):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
-
-
