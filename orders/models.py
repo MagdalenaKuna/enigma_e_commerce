@@ -5,6 +5,8 @@ from products.models import Product
 
 
 class Address(models.Model):
+    name = models.TextField()
+    surname = models.TextField()
     street = models.TextField()
     street_number = models.IntegerField()
     apartment_number = models.IntegerField()
@@ -13,16 +15,20 @@ class Address(models.Model):
     country = models.TextField()
 
 
+class ProductCount(models.Model):
+    product = models.ManyToManyField(Product)
+    count = models.IntegerField()
+
+
 class Order(models.Model):
     client_fk = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    products_list_and_numbers = models.ManyToManyField(Product)
+    products_list = models.ManyToManyField(ProductCount)
     order_date = models.DateField(auto_now_add=True)
     payment_date = models.DateField()
     bill = models.DecimalField(max_digits=10, decimal_places=2)
 
     def save(self, *args, **kwargs):
         if self.payment_date is None:
-            self.payment_date = self.order_date.date() + datetime.timedelta(days=2)
+            self.payment_date = self.order_date.date() + datetime.timedelta(days=5)
         super(Order, self).save(*args, **kwargs)
-

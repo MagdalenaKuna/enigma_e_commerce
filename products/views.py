@@ -3,7 +3,7 @@ from .models import Product
 from .serializers import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from accounts.permissions import SalesmanPermission, ClientPermission
+from accounts.permissions import SalesmanPermission
 from rest_framework.permissions import AllowAny
 from rest_framework import permissions
 

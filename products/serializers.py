@@ -1,13 +1,11 @@
 from rest_framework import serializers
 from .models import Product
-from accounts.permissions import SalesmanPermission
-from rest_framework import permissions
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'picture', 'thumbnail', 'category_fk']
+        fields = '__all__'
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
