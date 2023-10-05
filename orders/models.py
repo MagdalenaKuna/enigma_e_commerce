@@ -16,19 +16,18 @@ class Address(models.Model):
 
 
 class ProductCount(models.Model):
-    product = models.ManyToManyField(Product)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     count = models.IntegerField()
 
 
 class Order(models.Model):
+    @staticmethod
+    def payment_days():
+        return datetime.datetime.now() + datetime.timedelta(days=5)
+
     client_fk = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
     products_list = models.ManyToManyField(ProductCount)
     order_date = models.DateField(auto_now_add=True)
-    payment_date = models.DateField()
+    payment_date = models.DateField(default=payment_days())
     bill = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def save(self, *args, **kwargs):
-        if self.payment_date is None:
-            self.payment_date = self.order_date.date() + datetime.timedelta(days=5)
-        super(Order, self).save(*args, **kwargs)
