@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "accounts",
     'django_filters',
     "app_statistics",
+    'django_advance_thumbnail',
 ]
 
 MIDDLEWARE = [
