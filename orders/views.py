@@ -3,13 +3,13 @@ from .models import Order
 from .serializers import OrderCreateSerializer
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
-from accounts.permissions import SalesmanPermission, ClientPermission
+from accounts.permissions import ClientPermission
 
 
 class OrderCreate(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer
-    # permission_classes = [ClientPermission]
+    permission_classes = [ClientPermission]
 
     def send_email(self, request):
         subject = "Order confirmation"
@@ -25,10 +25,3 @@ class OrderCreate(generics.CreateAPIView):
         response = self.create(request, *args, **kwargs)
         self.send_email(request)
         return response
-
-
-
-class OrderList(generics.ListAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderCreateSerializer
-    # permission_classes = [ClientPermission]
